@@ -1,16 +1,30 @@
 //% weight=0 color=#CCB72C icon="\uf14e" block="SensorBag"
 namespace mooncar {
-	//%block="Enable IR"
-	export function EnIR() :void{
-		pins.onPulsed(DigitalPin.P1, PulseValue.Low, function () {
+	
+	export enum Port {
+		//% block="P0"
+		Port1 = DigitalPin.P0,
+		//% block="P1"
+		Port2 = DigitalPin.P1,
+		//% block="P2"
+		Port3 = DigitalPin.P2,
+		//% block="P8"
+		Port4 = DigitalPin.P8,
+		//% block="P16"
+		Port4 = DigitalPin.P16
+	}
+	
+	//%block="Enable IR %change"
+	export function EnIR(change: Port = 1) :void{
+		pins.onPulsed(change, PulseValue.Low, function () {
 			readir.push(pins.pulseDuration())
 		})
-		pins.onPulsed(DigitalPin.P1, PulseValue.High, function () {
+		pins.onPulsed(change, PulseValue.High, function () {
 			readir.push(pins.pulseDuration())
 		})
 		
-		pins.setEvents(DigitalPin.P1, PinEventType.Pulse)
-		pins.setPull(DigitalPin.P1, PinPullMode.PullUp)
+		pins.setEvents(change, PinEventType.Pulse)
+		pins.setPull(change, PinPullMode.PullUp)
 	}
 	
 	let readir: number[] = []
