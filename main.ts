@@ -1,6 +1,6 @@
 //% weight=0 color=#CCB72C icon="\uf14e" block="SensorBag"
 namespace mooncar {
-	
+	let IR_Send_port = 1
 	export enum Port {
 		//% block="P0"
 		Port1 = 1,
@@ -123,13 +123,52 @@ namespace mooncar {
 	}
 
 	function IRon(d: number) {
-		let r = d;
-		while (r > 26) {
-			pins.digitalWritePin(DigitalPin.P6, 1)
-			control.waitMicros(2);
-			pins.digitalWritePin(DigitalPin.P6, 0)
-			r = r - 26;
+		if (IR_Send_port == 1) {
+			let r = d;
+			while (r > 26) {
+				pins.digitalWritePin(DigitalPin.P0, 1)
+				control.waitMicros(2);
+				pins.digitalWritePin(DigitalPin.P0, 0)
+				r = r - 26;
+			}
 		}
+		else if (IR_Send_port == 2) {
+			let r = d;
+			while (r > 26) {
+				pins.digitalWritePin(DigitalPin.P1, 1)
+				control.waitMicros(2);
+				pins.digitalWritePin(DigitalPin.P1, 0)
+				r = r - 26;
+			}
+		}
+		else if (IR_Send_port == 3) {
+			let r = d;
+			while (r > 26) {
+				pins.digitalWritePin(DigitalPin.P2, 1)
+				control.waitMicros(2);
+				pins.digitalWritePin(DigitalPin.P2, 0)
+				r = r - 26;
+			}
+		}
+		else if (IR_Send_port == 4) {
+			let r = d;
+			while (r > 26) {
+				pins.digitalWritePin(DigitalPin.P8, 1)
+				control.waitMicros(2);
+				pins.digitalWritePin(DigitalPin.P8, 0)
+				r = r - 26;
+			}
+		}
+		else {
+			let r = d;
+			while (r > 26) {
+				pins.digitalWritePin(DigitalPin.P16, 1)
+				control.waitMicros(2);
+				pins.digitalWritePin(DigitalPin.P16, 0)
+				r = r - 26;
+			}
+		}
+		
 	}
 	
 	function IRoff(d: number) {
@@ -158,8 +197,9 @@ namespace mooncar {
 		return message
 	}
 	
-	//%block="IR Send(NEC) %irnumber|(0~255)"
-	export function IRcommand(irnumber: number) :void{
+	//%block="IR Send(NEC) %change %irnumber|(0~255)"
+	export function IRcommand(change: Port = 1, irnumber: number) :void{
+		IR_Send_port = change
 		let irnumber2 = recode(irnumber)
 		IRon(8500);
 		IRoff(4500);
