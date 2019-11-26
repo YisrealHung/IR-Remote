@@ -1,6 +1,5 @@
-# MoorCar
+# Sensor Bag
 
 # Reference
-* github:microsoft/pxt-neopixel
 * github.com/thtuerk/microbit-ir-remote
 
