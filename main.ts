@@ -197,7 +197,7 @@ namespace mooncar {
 		return message
 	}
 	
-	//%block="IR Send(NEC) %change %irnumber|(0~255)"
+	//%block="IR Send(NEC) %change| %irnumber|(0~255)"
 	export function IRcommand(change: Port = 1, irnumber: number) :void{
 		IR_Send_port = change
 		let irnumber2 = recode(irnumber)
