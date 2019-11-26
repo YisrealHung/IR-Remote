@@ -3,28 +3,69 @@ namespace mooncar {
 	
 	export enum Port {
 		//% block="P0"
-		Port1 = DigitalPin.P0,
+		Port1 = 1,
 		//% block="P1"
-		Port2 = DigitalPin.P1,
+		Port2 = 2,
 		//% block="P2"
-		Port3 = DigitalPin.P2,
+		Port3 = 3,
 		//% block="P8"
-		Port4 = DigitalPin.P8,
+		Port4 = 4,
 		//% block="P16"
-		Port4 = DigitalPin.P16
+		Port5 = 5
 	}
 	
 	//%block="Enable IR %change"
 	export function EnIR(change: Port = 1) :void{
-		pins.onPulsed(change, PulseValue.Low, function () {
-			readir.push(pins.pulseDuration())
-		})
-		pins.onPulsed(change, PulseValue.High, function () {
-			readir.push(pins.pulseDuration())
-		})
-		
-		pins.setEvents(change, PinEventType.Pulse)
-		pins.setPull(change, PinPullMode.PullUp)
+		if (change == 1) {
+			pins.onPulsed(DigitalPin.P0, PulseValue.Low, function () {
+				readir.push(pins.pulseDuration())
+			})
+			pins.onPulsed(DigitalPin.P0, PulseValue.High, function () {
+				readir.push(pins.pulseDuration())
+			})
+			pins.setEvents(DigitalPin.P0, PinEventType.Pulse)
+			pins.setPull(DigitalPin.P0, PinPullMode.PullUp)
+		}
+		else if (change == 2) {
+			pins.onPulsed(DigitalPin.P1, PulseValue.Low, function () {
+				readir.push(pins.pulseDuration())
+			})
+			pins.onPulsed(DigitalPin.P1, PulseValue.High, function () {
+				readir.push(pins.pulseDuration())
+			})
+			pins.setEvents(DigitalPin.P1, PinEventType.Pulse)
+			pins.setPull(DigitalPin.P1, PinPullMode.PullUp)
+		}
+		else if (change == 3) {
+			pins.onPulsed(DigitalPin.P2, PulseValue.Low, function () {
+				readir.push(pins.pulseDuration())
+			})
+			pins.onPulsed(DigitalPin.P2, PulseValue.High, function () {
+				readir.push(pins.pulseDuration())
+			})
+			pins.setEvents(DigitalPin.P2, PinEventType.Pulse)
+			pins.setPull(DigitalPin.P2, PinPullMode.PullUp)
+		}
+		else if (change == 4) {
+			pins.onPulsed(DigitalPin.P8, PulseValue.Low, function () {
+				readir.push(pins.pulseDuration())
+			})
+			pins.onPulsed(DigitalPin.P8, PulseValue.High, function () {
+				readir.push(pins.pulseDuration())
+			})
+			pins.setEvents(DigitalPin.P8, PinEventType.Pulse)
+			pins.setPull(DigitalPin.P8, PinPullMode.PullUp)
+		}
+		else {
+			pins.onPulsed(DigitalPin.P16, PulseValue.Low, function () {
+				readir.push(pins.pulseDuration())
+			})
+			pins.onPulsed(DigitalPin.P16, PulseValue.High, function () {
+				readir.push(pins.pulseDuration())
+			})
+			pins.setEvents(DigitalPin.P16, PinEventType.Pulse)
+			pins.setPull(DigitalPin.P16, PinPullMode.PullUp)
+		}		
 	}
 	
 	let readir: number[] = []
