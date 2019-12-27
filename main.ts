@@ -11,7 +11,9 @@ namespace mooncar {
 		//% block="P8"
 		Port4 = 4,
 		//% block="P16"
-		Port5 = 5
+		Port5 = 5,
+		//% block="P6"
+		Port6 = 6
 	}
 	
 	//%block="Enable IR %change"
@@ -56,7 +58,7 @@ namespace mooncar {
 			pins.setEvents(DigitalPin.P8, PinEventType.Pulse)
 			pins.setPull(DigitalPin.P8, PinPullMode.PullUp)
 		}
-		else {
+		else if (change == 5) {
 			pins.onPulsed(DigitalPin.P16, PulseValue.Low, function () {
 				readir.push(pins.pulseDuration())
 			})
@@ -65,7 +67,17 @@ namespace mooncar {
 			})
 			pins.setEvents(DigitalPin.P16, PinEventType.Pulse)
 			pins.setPull(DigitalPin.P16, PinPullMode.PullUp)
-		}		
+		}
+		else {
+			pins.onPulsed(DigitalPin.P6, PulseValue.Low, function () {
+				readir.push(pins.pulseDuration())
+			})
+			pins.onPulsed(DigitalPin.P6, PulseValue.High, function () {
+				readir.push(pins.pulseDuration())
+			})
+			pins.setEvents(DigitalPin.P6, PinEventType.Pulse)
+			pins.setPull(DigitalPin.P6, PinPullMode.PullUp)
+		}
 	}
 	
 	let readir: number[] = []
@@ -159,12 +171,21 @@ namespace mooncar {
 				r = r - 26;
 			}
 		}
-		else {
+		else if (IR_Send_port == 5){
 			let r = d;
 			while (r > 26) {
 				pins.digitalWritePin(DigitalPin.P16, 1)
 				control.waitMicros(2);
 				pins.digitalWritePin(DigitalPin.P16, 0)
+				r = r - 26;
+			}
+		}
+		else {
+			let r = d;
+			while (r > 26) {
+				pins.digitalWritePin(DigitalPin.P6, 1)
+				control.waitMicros(2);
+				pins.digitalWritePin(DigitalPin.P6, 0)
 				r = r - 26;
 			}
 		}
