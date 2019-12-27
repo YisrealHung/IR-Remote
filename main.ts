@@ -1,5 +1,5 @@
-//% weight=0 color=#CCB72C icon="\uf14e" block="SensorBag"
-namespace mooncar {
+//% weight=0 color=#CCB72C icon="\uf14e" block="IR Remote"
+namespace irremote {
 	let IR_Send_port = 1
 	export enum Port {
 		//% block="P0"
